@@ -19,7 +19,7 @@ public class deleteMain {
     Auth auth = Auth.create(ak, sk);
 
     String bucketName = "image";
-    String keyFile = "1.txt";
+    String keyFile = "1.jpg";
     // 构造一个带指定Zone对象的配置类 Zone为服务器地区
     Configuration cfg = new Configuration(Zone.zone0());
     BucketManager bucketManager = new BucketManager(auth, cfg);

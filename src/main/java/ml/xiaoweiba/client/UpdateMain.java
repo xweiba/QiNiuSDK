@@ -1,7 +1,7 @@
 package ml.xiaoweiba.client;
 
 
-
+import com.qiniu.storage.BucketManager;
 import com.qiniu.util.Auth;
 import com.qiniu.util.Base64;
 import com.qiniu.util.StringMap;
@@ -26,8 +26,7 @@ public class UpdateMain {
     Auth auth = Auth.create(ak, sk);    // TODO Auto-generated constructor stub
     String bucketname = "image";    //空间名
     String key = "1.txt";    //需要替换的图片名
-    StringMap putPolicy  = new StringMap();
-
+    StringMap putPolicy = new StringMap();
 
 
     public String getUpToken() {
@@ -47,7 +46,7 @@ public class UpdateMain {
         fis = new FileInputStream(new File(file));
         fis.read(src);
         String file64 = Base64.encodeToString(src, 0);
-        String url = "http://upload.qiniup.com/putb64/" + l+"/key/"+ UrlSafeBase64.encodeToString(key);
+        String url = "http://upload.qiniup.com/putb64/" + l + "/key/" + UrlSafeBase64.encodeToString(key);
         //非华东空间需要根据注意事项 1 修改上传域名
         RequestBody rb = RequestBody.create(null, file64);
         Request request = new Request.Builder().
@@ -60,6 +59,7 @@ public class UpdateMain {
         okhttp3.Response response = client.newCall(request).execute();
         System.out.println(response);
     }
+
     public static void main(String[] args) throws Exception {
         new UpdateMain().put64image();
     }

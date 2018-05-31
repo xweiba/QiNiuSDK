@@ -10,5 +10,10 @@
             <value>5242880</value>
         </property>
     </bean>
-    
+
+    <bean id="qiNiuSDK" class="ml.xiaoweiba.Tools.QiniuSDK">
+        <constructor-arg name="ak" value="" />
+        <constructor-arg name="sk" value="" />
+        <constructor-arg name="bucketname" value=""/>
+    </bean>
 </beans>

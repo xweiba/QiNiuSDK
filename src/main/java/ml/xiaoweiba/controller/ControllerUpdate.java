@@ -8,10 +8,13 @@ import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 
+import ml.xiaoweiba.Tools.QiniuSDK;
 import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,6 +34,9 @@ import java.util.UUID;
  **/
 @Controller
 public class ControllerUpdate {
+    @Autowired
+    QiniuSDK qiniuSDK;
+
     // @RequestMapping("/")
     // public String index(){
     //     return "index";
@@ -81,7 +87,7 @@ public class ControllerUpdate {
         return "上传成功";
     }
 
-    @RequestMapping("/updaImage")
+    @RequestMapping("/updaImagetest")
     @ResponseBody
     public boolean updaImage(Model model, HttpServletRequest request,
                              //接收图片地址
@@ -96,7 +102,7 @@ public class ControllerUpdate {
         String sk = "";    // 密钥配置
         Auth auth = Auth.create(ak, sk);    // TODO Auto-generated constructor stub
         String bucketname = "image";    //空间名
-        String key = null;    //需要替换的图片名
+        String key = null;    //默认不指定key的情况下，以文件内容的hash值作为文件名
 
         String upToken = auth.uploadToken(bucketname);
         Response qresponse;
@@ -114,5 +120,17 @@ public class ControllerUpdate {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @RequestMapping("/updaImage")
+    @ResponseBody
+    public boolean updaImage(MultipartFile item_pic){
+        return qiniuSDK.updateFile(item_pic);
+    }
+
+    @RequestMapping("/deleteFile")
+    @ResponseBody
+    public boolean deleteFile(String keyFile){
+        return qiniuSDK.delete(keyFile);
     }
 }
