@@ -21,7 +21,7 @@
       action="${pageContext.request.contextPath }/updaImage"
       method="post" enctype="multipart/form-data">
         <tr>
-            <td>商品图片</td>
+            <td>图片</td>
             <td>
                 <c:if test="${itemsCustom.pic !=null}">
                     <%-- "/pic"路径是绝对路径，不要加${pageContext.request.contextPath }/... --%>
